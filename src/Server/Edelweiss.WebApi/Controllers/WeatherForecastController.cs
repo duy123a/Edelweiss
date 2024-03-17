@@ -28,4 +28,11 @@ public class WeatherForecastController : ControllerBase
         })
         .ToArray();
     }
+
+    [HttpPost(Name = "PostWeatherForecast")]
+    public async Task<IActionResult> Post()
+    {
+        // Example for long logic execution, so we need to make it to be async
+        return Ok("Weather forecase posted");
+    }
 }
