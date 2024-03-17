@@ -1,6 +1,12 @@
 using Edelweiss.WebApi;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Host.UseSerilog((context, provider, config) =>
+{
+    config.WriteTo.File("log.txt", rollingInterval: RollingInterval.Day);
+});
 
 // Add services to the container.
 
@@ -19,6 +25,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseMiddleware<ExceptionMiddleware>();
+app.UseSerilogRequestLogging();
 
 app.UseHttpsRedirection();
 

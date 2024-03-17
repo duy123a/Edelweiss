@@ -8,9 +8,12 @@ public class ExceptionMiddleware
 {
     private RequestDelegate Next { get; }
 
-    public ExceptionMiddleware(RequestDelegate next)
+    private ILogger Logger { get; }
+
+    public ExceptionMiddleware(RequestDelegate next, ILogger logger)
     {
         Next = next;
+        Logger = logger;
     }
 
     public async Task Invoke(HttpContext httpContext)
@@ -21,13 +24,15 @@ public class ExceptionMiddleware
         }
         catch (Exception ex)
         {
+            Logger.LogError(500, ex, "Internal server error");
+
             httpContext.Response.ContentType = "application/problem+json";
             httpContext.Response.StatusCode = 500;
 
             var problemDetails = new ProblemDetails()
             {
                 Status = StatusCodes.Status500InternalServerError,
-                Detail = CreateExceptionMessage(ex),
+                Detail = ex.Message,
                 Instance = string.Empty,
                 Title = "Internal server error",
                 Type = "Error"
