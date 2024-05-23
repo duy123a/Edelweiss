@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Edelweiss.AuctionService.Data.Migrations
 {
     [DbContext(typeof(AuctionDbContext))]
-    [Migration("20240516130829_InitialCreate")]
+    [Migration("20240521112026_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -81,7 +81,7 @@ namespace Edelweiss.AuctionService.Data.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("ImgUrl")
+                    b.Property<string>("ImageUrl")
                         .HasColumnType("text");
 
                     b.Property<string>("Model")

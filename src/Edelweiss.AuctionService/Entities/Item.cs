@@ -12,9 +12,9 @@ public class Item
     public required string Model { get; set; }
     public int Year { get; set; }
     public required string Color { get; set; }
-    public string? ImgUrl { get; set; }
+    public string? ImageUrl { get; set; }
 
     // nav properties
-    public required Auction Auction { get; set; }
+    public Auction? Auction { get; set; }
     public Guid AuctionId { get; set; }
 }

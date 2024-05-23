@@ -40,7 +40,7 @@ namespace Edelweiss.AuctionService.Data.Migrations
                     Model = table.Column<string>(type: "text", nullable: false),
                     Year = table.Column<int>(type: "integer", nullable: false),
                     Color = table.Column<string>(type: "text", nullable: false),
-                    ImgUrl = table.Column<string>(type: "text", nullable: true),
+                    ImageUrl = table.Column<string>(type: "text", nullable: true),
                     AuctionId = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>

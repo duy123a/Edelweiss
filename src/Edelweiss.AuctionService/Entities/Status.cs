@@ -5,6 +5,6 @@ public enum Status
     Waiting,
     Live,
     Finished,
-    ReserveNotMeet,
+    ReserveNotMet,
     Pending
 }
