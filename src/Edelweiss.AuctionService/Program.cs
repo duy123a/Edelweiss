@@ -1,4 +1,5 @@
 using Edelweiss.AuctionService.Data;
+using Edelweiss.AuctionService.Middlewares;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,6 +17,10 @@ var app = builder.Build();
 
 app.UseAuthorization();
 
+app.UseExceptionMiddleware();
+
 app.MapControllers();
+
+app.InitDb();
 
 app.Run();

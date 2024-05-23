@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Edelweiss.AuctionService.Data;
 
-public class DbInitializer
+public static class DbInitializer
 {
-    public static void InitDb(WebApplication app)
+    public static void InitDb(this WebApplication app)
     {
         // As we using this one before the method app.Run and want to access its service
         // We need to create an own scope for it .~.
@@ -113,7 +113,7 @@ public class DbInitializer
                 Status = Status.Live,
                 ReservePrice = 20000,
                 Seller = "bob",
-                DateAuctionEnd = DateTimeOffset.Now.AddDays(45),
+                DateAuctionEnd = DateTime.UtcNow.AddDays(45),
                 Item = new Item
                 {
                     Creator = "Ferrari",
@@ -130,7 +130,7 @@ public class DbInitializer
                 Status = Status.Live,
                 ReservePrice = 150000,
                 Seller = "alice",
-                DateAuctionEnd = DateTimeOffset.Now.AddDays(13),
+                DateAuctionEnd = DateTime.UtcNow.AddDays(13),
                 Item = new Item
                 {
                     Creator = "Ferrari",
@@ -146,7 +146,7 @@ public class DbInitializer
                 Id = Guid.Parse("6a5011a1-fe1f-47df-9a32-b5346b289391"),
                 Status = Status.Live,
                 Seller = "bob",
-                DateAuctionEnd = DateTimeOffset.Now.AddDays(19),
+                DateAuctionEnd = DateTime.UtcNow.AddDays(19),
                 Item = new Item
                 {
                     Creator = "Audi",
@@ -163,7 +163,7 @@ public class DbInitializer
                 Status = Status.Live,
                 ReservePrice = 20000,
                 Seller = "tom",
-                DateAuctionEnd = DateTimeOffset.Now.AddDays(20),
+                DateAuctionEnd = DateTime.UtcNow.AddDays(20),
                 Item = new Item
                 {
                     Creator = "Audi",
@@ -180,7 +180,7 @@ public class DbInitializer
                 Status = Status.Live,
                 ReservePrice = 20000,
                 Seller = "bob",
-                DateAuctionEnd = DateTimeOffset.Now.AddDays(48),
+                DateAuctionEnd = DateTime.UtcNow.AddDays(48),
                 Item = new Item
                 {
                     Creator = "Ford",
