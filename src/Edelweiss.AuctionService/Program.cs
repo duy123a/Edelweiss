@@ -10,6 +10,8 @@ builder.Services.AddDbContext<AuctionDbContext>(opt =>
 {
     opt.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
+// Need to choose where is the assembly having mapping profile, just choose itself
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 var app = builder.Build();
 
