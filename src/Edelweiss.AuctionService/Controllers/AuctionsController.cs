@@ -36,6 +36,8 @@ public class AuctionsController : ControllerBase
             .Include(x => x.Item)
             .FirstOrDefaultAsync(x => x.Id == id);
 
+        if (auction == null) return NotFound();
+
         return _mapper.Map<AuctionDto>(auction);
     }
 }
