@@ -2,6 +2,7 @@
 using Edelweiss.AuctionService.Data;
 using Edelweiss.AuctionService.DTOs;
 using Edelweiss.AuctionService.Entities;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -57,5 +58,28 @@ public class AuctionsController : ControllerBase
         if (!result) return BadRequest("Could not save changes to the DB");
 
         return CreatedAtAction(nameof(GetAuctionById), new { id = auction.Id, }, _mapper.Map<AuctionDto>(auction));
+    }
+
+    [HttpPut("{id}")]
+    public async Task<ActionResult> UpdateAuction(Guid id, UpdateAuctionDto updateAuctionDto)
+    {
+        var auction = await _context.Auctions
+            .Include(x => x.Item)
+            .FirstOrDefaultAsync(x => x.Id == id);
+
+        if (auction == null) return NotFound();
+
+        // Check seller = username
+
+        auction.Item.Creator = updateAuctionDto.Creator ?? auction.Item.Creator;
+        auction.Item.Model = updateAuctionDto.Model ?? auction.Item.Model;
+        auction.Item.Color = updateAuctionDto.Color ?? auction.Item.Color;
+        auction.Item.Year = updateAuctionDto.Year ?? auction.Item.Year;
+
+        var result = await _context.SaveChangesAsync() > 0;
+
+        if (!result) return BadRequest("Could not save changes to the DB");
+
+        return Ok();
     }
 }
