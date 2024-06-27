@@ -1,12 +1,13 @@
 ﻿using AutoMapper;
 using Edelweiss.AuctionService.Data;
 using Edelweiss.AuctionService.DTOs;
+using Edelweiss.AuctionService.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace Edelweiss.AuctionService.Controllers;
 
-[ApiController]
+[ApiController] // Will check required tag from request
 [Route("api/auctions")]
 public class AuctionsController : ControllerBase
 {
@@ -30,7 +31,7 @@ public class AuctionsController : ControllerBase
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<AuctionDto>> GetAunctionById(Guid id)
+    public async Task<ActionResult<AuctionDto>> GetAuctionById(Guid id)
     {
         var auction = await _context.Auctions
             .Include(x => x.Item)
@@ -39,5 +40,22 @@ public class AuctionsController : ControllerBase
         if (auction == null) return NotFound();
 
         return _mapper.Map<AuctionDto>(auction);
+    }
+
+    [HttpPost]
+    public async Task<ActionResult<AuctionDto>> CreateAuction(CreateAuctionDto createAuctionDto)
+    {
+        var auction = _mapper.Map<Auction>(createAuctionDto);
+        // TODO: add current user as seller
+
+        auction.Seller = "Test";
+
+        _context.Auctions.Add(auction);
+
+        var result = await _context.SaveChangesAsync() > 0;
+
+        if (!result) return BadRequest("Could not save changes to the DB");
+
+        return CreatedAtAction(nameof(GetAuctionById), new { id = auction.Id, }, _mapper.Map<AuctionDto>(auction));
     }
 }
