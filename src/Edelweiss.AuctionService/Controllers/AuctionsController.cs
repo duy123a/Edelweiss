@@ -2,7 +2,6 @@
 using Edelweiss.AuctionService.Data;
 using Edelweiss.AuctionService.DTOs;
 using Edelweiss.AuctionService.Entities;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -69,7 +68,7 @@ public class AuctionsController : ControllerBase
 
         if (auction == null) return NotFound();
 
-        // Check seller = username
+        // TODO: Check seller = username
 
         auction.Item.Creator = updateAuctionDto.Creator ?? auction.Item.Creator;
         auction.Item.Model = updateAuctionDto.Model ?? auction.Item.Model;
@@ -82,4 +81,22 @@ public class AuctionsController : ControllerBase
 
         return Ok();
     }
+
+    [HttpDelete("{id}")]
+    public async Task<ActionResult> DeleteAuction(Guid id)
+    {
+        var auction = await _context.Auctions.FindAsync(id);
+
+        if (auction == null) return NotFound();
+
+        // TODO: check seller name = username
+
+        _context.Auctions.Remove(auction);
+
+        var result = await _context.SaveChangesAsync() > 0;
+
+		if (!result) return BadRequest("Could not save changes to the DB");
+
+		return Ok();
+	}
 }
