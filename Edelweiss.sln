@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Edelweiss.AuctionService", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Edelweiss.Common", "src\Edelweiss.Common\Edelweiss.Common.csproj", "{D8817A9F-0C40-48A1-8E25-79DBCDA8786A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Edelweiss.SearchService", "src\Edelweiss.SearchService\Edelweiss.SearchService.csproj", "{559AF13E-541E-4BBC-AB08-C5CD229AD930}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -26,9 +28,14 @@ Global
 		{D8817A9F-0C40-48A1-8E25-79DBCDA8786A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D8817A9F-0C40-48A1-8E25-79DBCDA8786A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D8817A9F-0C40-48A1-8E25-79DBCDA8786A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{559AF13E-541E-4BBC-AB08-C5CD229AD930}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{559AF13E-541E-4BBC-AB08-C5CD229AD930}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{559AF13E-541E-4BBC-AB08-C5CD229AD930}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{559AF13E-541E-4BBC-AB08-C5CD229AD930}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{705B5A8B-90CA-4BDA-90D1-E6E58CD17054} = {88BCD707-E25E-445B-90F1-B45BC74C493C}
 		{D8817A9F-0C40-48A1-8E25-79DBCDA8786A} = {88BCD707-E25E-445B-90F1-B45BC74C493C}
+		{559AF13E-541E-4BBC-AB08-C5CD229AD930} = {88BCD707-E25E-445B-90F1-B45BC74C493C}
 	EndGlobalSection
 EndGlobal
