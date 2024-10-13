@@ -1,3 +1,7 @@
+using Edelweiss.SearchService.Models;
+using MongoDB.Driver;
+using MongoDB.Entities;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -11,5 +15,15 @@ var app = builder.Build();
 app.UseAuthorization();
 
 app.MapControllers();
+
+await DB.InitAsync(
+    "SearchDb",
+    MongoClientSettings.FromConnectionString(builder.Configuration.GetConnectionString("MongoDbConnection")));
+
+await DB.Index<Item>()
+    .Key(x => x.Creator, KeyType.Text)
+    .Key(x => x.Model, KeyType.Text)
+    .Key(x => x.Color, KeyType.Text)
+    .CreateAsync();
 
 app.Run();
