@@ -13,6 +13,7 @@ public class AuctionsController : ControllerBase
 {
     private readonly AuctionDbContext _context;
     private readonly IMapper _mapper;
+
     public AuctionsController(AuctionDbContext context, IMapper mapper)
     {
         _context = context;
@@ -37,7 +38,10 @@ public class AuctionsController : ControllerBase
             .Include(x => x.Item)
             .FirstOrDefaultAsync(x => x.Id == id);
 
-        if (auction == null) return NotFound();
+        if (auction == null)
+        {
+            return NotFound();
+        }
 
         return _mapper.Map<AuctionDto>(auction);
     }
@@ -54,9 +58,12 @@ public class AuctionsController : ControllerBase
 
         var result = await _context.SaveChangesAsync() > 0;
 
-        if (!result) return BadRequest("Could not save changes to the DB");
+        if (!result)
+        {
+            return BadRequest("Could not save changes to the DB");
+        }
 
-        return CreatedAtAction(nameof(GetAuctionById), new { id = auction.Id, }, _mapper.Map<AuctionDto>(auction));
+        return CreatedAtAction(nameof(GetAuctionById), new { id = auction.Id }, _mapper.Map<AuctionDto>(auction));
     }
 
     [HttpPut("{id}")]
@@ -66,7 +73,10 @@ public class AuctionsController : ControllerBase
             .Include(x => x.Item)
             .FirstOrDefaultAsync(x => x.Id == id);
 
-        if (auction == null) return NotFound();
+        if (auction == null)
+        {
+            return NotFound();
+        }
 
         // TODO: Check seller = username
 
@@ -77,7 +87,10 @@ public class AuctionsController : ControllerBase
 
         var result = await _context.SaveChangesAsync() > 0;
 
-        if (!result) return BadRequest("Could not save changes to the DB");
+        if (!result)
+        {
+            return BadRequest("Could not save changes to the DB");
+        }
 
         return Ok();
     }
@@ -87,7 +100,10 @@ public class AuctionsController : ControllerBase
     {
         var auction = await _context.Auctions.FindAsync(id);
 
-        if (auction == null) return NotFound();
+        if (auction == null)
+        {
+            return NotFound();
+        }
 
         // TODO: check seller name = username
 
@@ -95,8 +111,11 @@ public class AuctionsController : ControllerBase
 
         var result = await _context.SaveChangesAsync() > 0;
 
-		if (!result) return BadRequest("Could not save changes to the DB");
+        if (!result)
+        {
+            return BadRequest("Could not save changes to the DB");
+        }
 
-		return Ok();
-	}
+        return Ok();
+    }
 }
