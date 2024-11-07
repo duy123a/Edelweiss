@@ -1,6 +1,4 @@
-using Edelweiss.SearchService.Models;
-using MongoDB.Driver;
-using MongoDB.Entities;
+using Edelweiss.SearchService.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,14 +14,14 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-await DB.InitAsync(
-    "SearchDb",
-    MongoClientSettings.FromConnectionString(builder.Configuration.GetConnectionString("MongoDbConnection")));
-
-await DB.Index<Item>()
-    .Key(x => x.Creator, KeyType.Text)
-    .Key(x => x.Model, KeyType.Text)
-    .Key(x => x.Color, KeyType.Text)
-    .CreateAsync();
+try
+{
+    await DbInitializer.InitDb(app);
+}
+catch (Exception e)
+{
+    Console.WriteLine(e);
+    throw;
+}
 
 app.Run();
