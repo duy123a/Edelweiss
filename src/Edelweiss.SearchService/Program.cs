@@ -1,5 +1,6 @@
 using Edelweiss.SearchService.Data;
 using Edelweiss.SearchService.Services;
+using MassTransit;
 using Polly;
 using Polly.Extensions.Http;
 using System.Net;
@@ -12,6 +13,14 @@ builder.Services.AddControllers();
 builder.Services
     .AddHttpClient<AuctionSvcHttpClient>()
     .AddPolicyHandler(GetPolicy());
+
+builder.Services.AddMassTransit(x =>
+{
+    x.UsingRabbitMq((context, cfg) =>
+    {
+        cfg.ConfigureEndpoints(context);
+    });
+});
 
 var app = builder.Build();
 
